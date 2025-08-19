@@ -19,7 +19,7 @@ export default function App(){
         <p>{me.summary}</p>
       </Section>
 
-      <Section id="projects" title="Featured Projects" extra={<span className="kv">(3)</span>}>
+      <Section id="projects" title="Featured Projects">
         <Projects/>
       </Section>
 

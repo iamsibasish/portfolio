@@ -712,11 +712,148 @@ h1,h2,h3{margin:0 0 10px} h1{font-size:40px;line-height:1.15} h2{font-size:26px;
 input.search{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--btn-border);background:var(--input-bg);color:var(--text);outline:none;box-shadow:0 0 0 0 var(--ring);transition:box-shadow .2s}
 input.search:focus{box-shadow:0 0 0 6px var(--ring)}
 
+/* Project Carousel Styles */
+.carousel-wrapper {
+  position: relative;
+  padding: 0 60px 50px 60px;
+}
+
+/* Navigation Controls */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 2;
+  color: var(--text);
+}
+
+.carousel-nav:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 16px rgba(138, 92, 255, 0.3);
+  border-color: var(--primary);
+}
+
+.carousel-nav-prev {
+  left: 10px;
+}
+
+.carousel-nav-next {
+  right: 10px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot:hover {
+  border-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Enhanced project cards */
+.project {
+  transition: all 0.3s ease;
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(138, 92, 255, 0.15);
+}
+
+.project .thumb {
+  transition: transform 0.3s ease;
+}
+
+.project:hover .thumb {
+  transform: scale(1.02);
+}
+
+/* Responsive Design for Carousel */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    padding: 0 50px 40px 50px;
+  }
+  
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-nav-prev {
+    left: 5px;
+  }
+  
+  .carousel-nav-next {
+    right: 5px;
+  }
+  
+  .carousel-dots {
+    bottom: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    padding: 0 0 35px 0;
+  }
+  
+  .carousel-nav {
+    display: none;
+  }
+  
+  .carousel-dots {
+    bottom: 0;
+  }
+}
+
 /* Light theme specific adjustments */
 [data-theme="light"] .hero {
   background: radial-gradient(1200px 600px at 20% -10%, rgba(138, 92, 255, 0.15), transparent), 
               radial-gradient(1000px 600px at 80% 10%, rgba(0, 102, 204, 0.1), transparent), 
               linear-gradient(180deg, var(--surface), #f1f5f9);
+}
+
+[data-theme="light"] .project-metrics {
+  background: rgba(138, 92, 255, 0.08);
+  border-color: rgba(138, 92, 255, 0.15);
+}
+
+[data-theme="light"] .project-card:hover {
+  box-shadow: 0 8px 32px rgba(138, 92, 255, 0.12);
 }
 
 [data-theme="light"] .timeline::before {
