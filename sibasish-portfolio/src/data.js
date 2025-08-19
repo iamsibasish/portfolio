@@ -20,21 +20,21 @@ export const projects = [
     period: "CRED",
     blurb: "High-throughput settlement unit (~$200M TPV/day peak) with resilient queues, retries, and bank payout integrations.",
     tags: ["Java","Event-driven","MySQL","SQS"],
-    image: "/src/assets/p1.svg"
+    image: "/p1.svg"
   },
   {
     title: "RBI Tokenization & Tap‑to‑Pay",
     period: "CRED",
     blurb: "PCI-aligned tokenization service; merchant-level tokens; EMV contactless flow for Android NFC.",
     tags: ["Security","Payments","Java","Dropwizard"],
-    image: "/src/assets/p2.svg"
+    image: "/p2.svg"
   },
   {
     title: "Platform Observability @ TWID",
     period: "TWID PAY",
     blurb: "Unified tracing with OpenTelemetry, SigNoz dashboards, Kafka event mart; latency cuts via caching & async.",
     tags: ["OpenTelemetry","Kafka","Redis","SigNoz"],
-    image: "/src/assets/p3.svg"
+    image: "/p3.svg"
   }
 ];
 
