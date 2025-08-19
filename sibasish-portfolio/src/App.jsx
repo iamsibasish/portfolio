@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import Section from "./components/Section";
 import Projects from "./components/Projects";
 import Timeline from "./components/Timeline";
+import Contact from "./components/Contact";
 
 export default function App(){
   const { theme } = useTheme();
@@ -35,14 +36,11 @@ export default function App(){
         </ul>
       </Section>
 
-      <Section id="contact" title="Contact">
-        <div className="card" style={{display:'flex', gap:16, flexWrap:'wrap'}}>
-          <a className="btn primary" href={`mailto:${me.email}`}>Email</a>
-          <a className="btn" href={me.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-          <a className="btn" href={me.github} target="_blank" rel="noreferrer">GitHub</a>
-          <span className="kv">Phone: {me.phone}</span>
+      <section id="contact" className="section">
+        <div className="container">
+          <Contact contactInfo={me} />
         </div>
-      </Section>
+      </section>
 
       <footer className="footer">© {new Date().getFullYear()} {me.name}. Crafted with React, Vite, and a sprinkle of motion.</footer>
     </div>
