@@ -1,5 +1,6 @@
 import "./styles.css";
 import { me, experience, education } from "./data";
+import { useTheme } from "./contexts/ThemeContext";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Section from "./components/Section";
@@ -7,8 +8,10 @@ import Projects from "./components/Projects";
 import Timeline from "./components/Timeline";
 
 export default function App(){
+  const { theme } = useTheme();
+  
   return (
-    <div>
+    <div data-theme={theme}>
       <Nav/>
       <Hero me={me}/>
 
