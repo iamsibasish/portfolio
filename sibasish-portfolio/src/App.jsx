@@ -17,7 +17,7 @@ export default function App(){
       <Hero me={me}/>
 
       <Section id="about" title="About">
-        <p>{me.summary}</p>
+        <p className="text-muted">{me.summary}</p>
       </Section>
 
       <Section id="projects" title="Featured Projects">
@@ -29,11 +29,19 @@ export default function App(){
       </Section>
 
       <Section id="education" title="Education">
-        <ul>
-          {education.map((e,i)=>(
-            <li key={i}><strong>{e.school}</strong> — {e.degree} <span className="kv">({e.period})</span></li>
-          ))}
-        </ul>
+        <div className="card">
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            {education.map((e,i)=>(
+              <li key={i} style={{ 
+                padding: '16px 0', 
+                borderBottom: i < education.length - 1 ? '1px solid var(--border)' : 'none' 
+              }}>
+                <strong className="visual-emphasis">{e.school}</strong> — {e.degree} 
+                <span className="text-subtle"> ({e.period})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Section>
 
       <section id="contact" className="section">
@@ -42,7 +50,7 @@ export default function App(){
         </div>
       </section>
 
-      <footer className="footer">© {new Date().getFullYear()} {me.name}. Crafted with React, Vite, and a sprinkle of motion.</footer>
+      <footer className="footer">© {new Date().getFullYear()} {me.name}. Built with React, Vite, and Framer Motion.</footer>
     </div>
   )
 }

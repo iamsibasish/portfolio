@@ -41,7 +41,7 @@ const highlightsVariants = {
 export default function Hero({ me }){
   return (
     <section className="hero" id="top">
-      <div className="hero-blob"></div>
+      <div className="hero-blob will-change-transform"></div>
       <motion.div 
         className="container hero-content"
         variants={containerVariants}
@@ -53,30 +53,105 @@ export default function Hero({ me }){
           variants={itemVariants}
         >
           <div className="hero-text">
-            <h1 className="hero-title">
+            <motion.h1 
+              className="hero-title"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Hi, I'm <span className="hero-name">Sibasish</span>.
               <br className="hero-break"/>
               I design resilient backend systems.
-            </h1>
-            <p className="hero-summary">{me.summary}</p>
+            </motion.h1>
+            <motion.p 
+              className="hero-summary"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              {me.summary}
+            </motion.p>
           </div>
-          <div className="hero-actions">
-            <a className="btn primary" href="#projects">View Projects</a>
-            <a className="btn" href={me.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a className="btn" href={me.github} target="_blank" rel="noreferrer">GitHub</a>
-          </div>
-          <div className="hero-stack">
-            {me.stacks.map(s => <span key={s} className="badge">{s}</span>)}
-          </div>
+          <motion.div 
+            className="hero-actions"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <motion.a 
+              className="btn primary" 
+              href="#projects"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Projects
+            </motion.a>
+            <motion.a 
+              className="btn" 
+              href={me.linkedin} 
+              target="_blank" 
+              rel="noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              LinkedIn
+            </motion.a>
+            <motion.a 
+              className="btn" 
+              href={me.github} 
+              target="_blank" 
+              rel="noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              GitHub
+            </motion.a>
+          </motion.div>
+          <motion.div 
+            className="hero-stack"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            {me.stacks.map((s, index) => (
+              <motion.span 
+                key={s} 
+                className="badge"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
+                whileHover={{ scale: 1.1, y: -2 }}
+              >
+                {s}
+              </motion.span>
+            ))}
+          </motion.div>
         </motion.div>
         <motion.div 
-          className="hero-highlights"
+          className="hero-highlights floating-animation"
           variants={highlightsVariants}
         >
           <div className="card hero-highlights-card">
-            <h3 className="hero-highlights-title">Highlights</h3>
+            <motion.h3 
+              className="hero-highlights-title"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              Highlights
+            </motion.h3>
             <ul className="hero-highlights-list">
-              {me.highlights.map((h,i)=>(<li key={i}>{h}</li>))}
+              {me.highlights.map((h,i)=>(
+                <motion.li 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
+                  whileHover={{ x: 4 }}
+                >
+                  {h}
+                </motion.li>
+              ))}
             </ul>
           </div>
         </motion.div>

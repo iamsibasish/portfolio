@@ -1,13 +1,99 @@
+import { motion } from "framer-motion";
+
+const timelineVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  }
+};
+
+const bulletVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
+  }
+};
+
 export default function Timeline({ items }){
   return (
-    <div className="timeline">
+    <motion.div 
+      className="timeline"
+      variants={timelineVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+    >
       {items.map((it, idx)=>(
-        <div key={idx} className="timeline-item card">
-          <h3>{it.role} · {it.company}</h3>
-          <div className="kv">{it.period}</div>
-          <ul>{it.bullets.map((b,i)=><li key={i}>{b}</li>)}</ul>
-        </div>
+        <motion.div 
+          key={idx} 
+          className="timeline-item card will-change-transform"
+          variants={itemVariants}
+          whileHover={{ 
+            x: 12,
+            transition: { duration: 0.3 }
+          }}
+        >
+          <div className="timeline-header">
+            <motion.h3
+              className="visual-emphasis"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              {it.role} · {it.company}
+            </motion.h3>
+            <div className="kv text-subtle">{it.period}</div>
+          </div>
+          <motion.ul 
+            className="timeline-bullets"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.2
+                }
+              }
+            }}
+          >
+            {it.bullets.map((b,i)=>(
+              <motion.li 
+                key={i}
+                variants={bulletVariants}
+                whileHover={{ 
+                  x: 4,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                {b}
+              </motion.li>
+            ))}
+          </motion.ul>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   )
 }

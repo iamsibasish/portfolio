@@ -89,7 +89,7 @@ export default function Projects(){
     <div className="grid">
       <input 
         className="search" 
-        placeholder="Search projects… (e.g. Kafka, tokenization, OTel)" 
+        placeholder="Search projects… (e.g., Kafka, tokenization, OpenTelemetry)" 
         value={q} 
         onChange={e=>setQ(e.target.value)} 
       />
@@ -106,34 +106,67 @@ export default function Projects(){
           className="grid grid-3"
           layout
           transition={{ 
-            duration: 0.5,
+            duration: 0.6,
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
           {visibleProjects.map((project, i) => (
             <motion.article 
               key={project.id}
-              className="project card"
+              className="project card will-change-transform"
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
               transition={{ 
-                duration: 0.5,
-                delay: i * 0.1,
+                duration: 0.6,
+                delay: i * 0.15,
                 ease: [0.25, 0.46, 0.45, 0.94]
               }}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3 }
+              }}
             >
-              <img className="thumb" src={project.image} alt={project.title} />
+              <motion.img 
+                className="thumb" 
+                src={project.image} 
+                alt={project.title}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              />
               <div className="meta">
                 <div>
-                  <h3>{project.title}</h3>
-                  <div className="kv">{project.period}</div>
+                  <motion.h3
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {project.title}
+                  </motion.h3>
+                  <div className="kv text-subtle">{project.period}</div>
                 </div>
               </div>
-              <p>{project.blurb}</p>
+              <p className="text-muted">{project.blurb}</p>
               <div className="tags">
-                {project.tags.map(t => <span key={t} className="tag">{t}</span>)}
+                {project.tags.map((t, index) => (
+                  <motion.span 
+                    key={t} 
+                    className="tag"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.4, 
+                      delay: i * 0.15 + index * 0.05 
+                    }}
+                    whileHover={{ 
+                      scale: 1.1, 
+                      y: -2,
+                      transition: { duration: 0.2 }
+                    }}
+                  >
+                    {t}
+                  </motion.span>
+                ))}
               </div>
             </motion.article>
           ))}
