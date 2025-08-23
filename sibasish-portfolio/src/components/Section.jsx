@@ -46,14 +46,15 @@ export default function Section({ id, title, children, extra }){
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
+      aria-labelledby={`${id}-heading`}
     >
       <div className="container">
         <motion.div 
           className="section-title"
           variants={titleVariants}
         >
-          <span className="dot"></span>
-          <h2 className="text-gradient">{title}</h2>
+          <span className="dot" aria-hidden="true"></span>
+          <h2 id={`${id}-heading`} className="text-gradient">{title}</h2>
           {extra}
         </motion.div>
         <motion.div 

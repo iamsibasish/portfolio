@@ -4,7 +4,9 @@ import {
   getSavedTheme, 
   saveTheme, 
   applyTheme, 
-  createSystemPreferenceListener 
+  createSystemPreferenceListener,
+  getPrefersReducedMotion,
+  createReducedMotionListener
 } from '../utils/themeUtils.js';
 
 const ThemeContext = createContext();
@@ -24,11 +26,17 @@ export const ThemeProvider = ({ children }) => {
     return savedTheme || getSystemPreference();
   });
   const [systemPreference, setSystemPreference] = useState(() => getSystemPreference());
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => getPrefersReducedMotion());
 
-  // Set up system preference listener
+  // Set up system preference listeners
   useEffect(() => {
-    const cleanup = createSystemPreferenceListener(setSystemPreference);
-    return cleanup;
+    const cleanupTheme = createSystemPreferenceListener(setSystemPreference);
+    const cleanupMotion = createReducedMotionListener(setPrefersReducedMotion);
+    
+    return () => {
+      cleanupTheme();
+      cleanupMotion();
+    };
   }, []);
 
   // Initialize theme from localStorage or system preference
@@ -46,6 +54,13 @@ export const ThemeProvider = ({ children }) => {
     applyTheme(theme);
   }, [theme]);
 
+  // Apply reduced motion preference to document root
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-reduced-motion', prefersReducedMotion.toString());
+    }
+  }, [prefersReducedMotion]);
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -55,7 +70,8 @@ export const ThemeProvider = ({ children }) => {
   const value = {
     theme,
     toggleTheme,
-    systemPreference
+    systemPreference,
+    prefersReducedMotion
   };
 
   return (

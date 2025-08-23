@@ -44,9 +44,11 @@ export default function Timeline({ items }){
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
+      role="list"
+      aria-label="Professional experience timeline"
     >
       {items.map((it, idx)=>(
-        <motion.div 
+        <motion.article 
           key={idx} 
           className="timeline-item card will-change-transform"
           variants={itemVariants}
@@ -54,17 +56,22 @@ export default function Timeline({ items }){
             x: 12,
             transition: { duration: 0.3 }
           }}
+          role="listitem"
+          aria-labelledby={`experience-${idx}-title`}
         >
-          <div className="timeline-header">
+          <header className="timeline-header">
             <motion.h3
+              id={`experience-${idx}-title`}
               className="visual-emphasis"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
               {it.role} · {it.company}
             </motion.h3>
-            <div className="kv text-subtle">{it.period}</div>
-          </div>
+            <div className="kv text-subtle" aria-label={`Employment period: ${it.period}`}>
+              {it.period}
+            </div>
+          </header>
           <motion.ul 
             className="timeline-bullets"
             initial="hidden"
@@ -78,6 +85,8 @@ export default function Timeline({ items }){
                 }
               }
             }}
+            role="list"
+            aria-label="Key achievements and responsibilities"
           >
             {it.bullets.map((b,i)=>(
               <motion.li 
@@ -87,12 +96,13 @@ export default function Timeline({ items }){
                   x: 4,
                   transition: { duration: 0.2 }
                 }}
+                role="listitem"
               >
                 {b}
               </motion.li>
             ))}
           </motion.ul>
-        </motion.div>
+        </motion.article>
       ))}
     </motion.div>
   )

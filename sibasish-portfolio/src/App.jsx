@@ -14,43 +14,45 @@ export default function App(){
   return (
     <div data-theme={theme}>
       <Nav/>
-      <Hero me={me}/>
+      <main id="main-content">
+        <Hero me={me}/>
 
-      <Section id="about" title="About">
-        <p className="text-muted">{me.summary}</p>
-      </Section>
+        <Section id="about" title="About">
+          <p className="text-muted">{me.summary}</p>
+        </Section>
 
-      <Section id="projects" title="Featured Projects">
-        <Projects/>
-      </Section>
+        <Section id="projects" title="Featured Projects">
+          <Projects/>
+        </Section>
 
-      <Section id="experience" title="Experience">
-        <Timeline items={experience}/>
-      </Section>
+        <Section id="experience" title="Experience">
+          <Timeline items={experience}/>
+        </Section>
 
-      <Section id="education" title="Education">
-        <div className="card">
-          <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-            {education.map((e,i)=>(
-              <li key={i} style={{ 
-                padding: '16px 0', 
-                borderBottom: i < education.length - 1 ? '1px solid var(--border)' : 'none' 
-              }}>
-                <strong className="visual-emphasis">{e.school}</strong> — {e.degree} 
-                <span className="text-subtle"> ({e.period})</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
+        <Section id="education" title="Education">
+          <div className="card">
+            <ul style={{ margin: 0, padding: 0, listStyle: 'none' }} role="list">
+              {education.map((e,i)=>(
+                <li key={i} style={{ 
+                  padding: '16px 0', 
+                  borderBottom: i < education.length - 1 ? '1px solid var(--border)' : 'none' 
+                }}>
+                  <strong className="visual-emphasis">{e.school}</strong> — {e.degree} 
+                  <span className="text-subtle"> ({e.period})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
 
-      <section id="contact" className="section">
-        <div className="container">
+        <Section id="contact" title="Contact">
           <Contact contactInfo={me} />
-        </div>
-      </section>
+        </Section>
+      </main>
 
-      <footer className="footer">© {new Date().getFullYear()} {me.name}. Built with React, Vite, and Framer Motion.</footer>
+      <footer className="footer" role="contentinfo">
+        © {new Date().getFullYear()} {me.name}. Built with React, Vite, and Framer Motion.
+      </footer>
     </div>
   )
 }

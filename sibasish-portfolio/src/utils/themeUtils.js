@@ -83,3 +83,42 @@ export const createSystemPreferenceListener = (callback) => {
     return () => {};
   }
 };
+
+/**
+ * Detects if user prefers reduced motion
+ * @returns {boolean} True if user prefers reduced motion
+ */
+export const getPrefersReducedMotion = () => {
+  if (typeof window === 'undefined') return false;
+  
+  try {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    return mediaQuery.matches;
+  } catch (error) {
+    console.warn('Failed to detect reduced motion preference:', error);
+    return false;
+  }
+};
+
+/**
+ * Creates a listener for reduced motion preference changes
+ * @param {Function} callback - Function to call when preference changes
+ * @returns {Function} Cleanup function to remove the listener
+ */
+export const createReducedMotionListener = (callback) => {
+  if (typeof window === 'undefined') return () => {};
+  
+  try {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleChange = (e) => {
+      callback(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  } catch (error) {
+    console.warn('Failed to create reduced motion listener:', error);
+    return () => {};
+  }
+};

@@ -40,8 +40,8 @@ const highlightsVariants = {
 
 export default function Hero({ me }){
   return (
-    <section className="hero" id="top">
-      <div className="hero-blob will-change-transform"></div>
+    <section className="hero" id="top" aria-labelledby="hero-heading">
+      <div className="hero-blob will-change-transform" aria-hidden="true"></div>
       <motion.div 
         className="container hero-content"
         variants={containerVariants}
@@ -54,6 +54,7 @@ export default function Hero({ me }){
         >
           <div className="hero-text">
             <motion.h1 
+              id="hero-heading"
               className="hero-title"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -72,20 +73,23 @@ export default function Hero({ me }){
               {me.summary}
             </motion.p>
           </div>
-          <motion.div 
+          <motion.nav 
             className="hero-actions"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
+            aria-label="Primary navigation"
           >
             <motion.a 
               className="btn primary" 
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-describedby="projects-description"
             >
               View Projects
             </motion.a>
+            <span id="projects-description" className="sr-only">Navigate to projects section</span>
             <motion.a 
               className="btn" 
               href={me.linkedin} 
@@ -93,6 +97,7 @@ export default function Hero({ me }){
               rel="noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Visit LinkedIn profile (opens in new tab)"
             >
               LinkedIn
             </motion.a>
@@ -103,15 +108,18 @@ export default function Hero({ me }){
               rel="noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Visit GitHub profile (opens in new tab)"
             >
               GitHub
             </motion.a>
-          </motion.div>
+          </motion.nav>
           <motion.div 
             className="hero-stack"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
+            role="list"
+            aria-label="Technology stack"
           >
             {me.stacks.map((s, index) => (
               <motion.span 
@@ -121,18 +129,21 @@ export default function Hero({ me }){
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
                 whileHover={{ scale: 1.1, y: -2 }}
+                role="listitem"
               >
                 {s}
               </motion.span>
             ))}
           </motion.div>
         </motion.div>
-        <motion.div 
+        <motion.aside 
           className="hero-highlights floating-animation"
           variants={highlightsVariants}
+          aria-labelledby="highlights-heading"
         >
           <div className="card hero-highlights-card">
             <motion.h3 
+              id="highlights-heading"
               className="hero-highlights-title"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,7 +151,7 @@ export default function Hero({ me }){
             >
               Highlights
             </motion.h3>
-            <ul className="hero-highlights-list">
+            <ul className="hero-highlights-list" role="list">
               {me.highlights.map((h,i)=>(
                 <motion.li 
                   key={i}
@@ -154,7 +165,7 @@ export default function Hero({ me }){
               ))}
             </ul>
           </div>
-        </motion.div>
+        </motion.aside>
       </motion.div>
     </section>
   )

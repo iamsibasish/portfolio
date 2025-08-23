@@ -30,6 +30,23 @@ export default function Nav() {
       if (event.key === 'Escape' && isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
       }
+      
+      // Tab trapping for mobile menu
+      if (isMobileMenuOpen && event.key === 'Tab') {
+        const focusableElements = document.querySelectorAll(
+          '.nav-mobile-menu a, .nav-mobile-menu button, .theme-toggle, .nav-mobile-toggle'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (event.shiftKey && document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -96,9 +113,16 @@ export default function Nav() {
             <motion.button
               className="nav-mobile-toggle"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }
+              }}
               whileTap={{ scale: 0.95 }}
-              aria-label="Toggle navigation menu"
+              aria-label={`${isMobileMenuOpen ? 'Close' : 'Open'} navigation menu`}
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <div className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
                 <span></span>
@@ -113,28 +137,40 @@ export default function Nav() {
         <AnimatePresence>
           {isMobile && isMobileMenuOpen && (
             <motion.div
+              id="mobile-menu"
               className="nav-mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
+              role="menu"
+              aria-label="Mobile navigation menu"
             >
-              <div className="nav-mobile-links">
+              <nav className="nav-mobile-links" role="none">
                 {navItems.map((item, index) => (
                   <motion.a
                     key={item.href}
                     href={item.href}
                     className="nav-mobile-link"
                     onClick={handleNavClick}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleNavClick();
+                        window.location.href = item.href;
+                      }
+                    }}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                     whileTap={{ scale: 0.95 }}
+                    role="menuitem"
+                    tabIndex={isMobileMenuOpen ? 0 : -1}
                   >
                     {item.label}
                   </motion.a>
                 ))}
-              </div>
+              </nav>
             </motion.div>
           )}
         </AnimatePresence>
